@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f8fa">
+    <meta name="description" content="Learn sorting and searching algorithms through step-by-step visualizations.">
+    <title>AlgoVision — Visualize. Learn. Understand.</title>
+    <link rel="icon" type="image/svg+xml" href="/algovision-mark.svg">
+    <link rel="stylesheet" href="/styles.css">
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#visualizer">Skip to the visualizer</a>
+    <header class="topbar">
+      <button id="sidebar-toggle" class="icon-button mobile-menu-toggle" type="button" aria-label="Open algorithm menu" aria-controls="algorithm-sidebar" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <a class="brand" href="#top" aria-label="AlgoVision home">
+        <img src="/algovision-mark.svg" width="36" height="36" alt="" class="brand-mark">
+        <span class="brand-wording"><strong>AlgoVision</strong><small>Visualize. Learn. Understand.</small></span>
+      </a>
+    </header>
+
+    <div class="app-shell" id="top">
+      <div id="sidebar-scrim" class="sidebar-scrim" aria-hidden="true"></div>
+      <aside id="algorithm-sidebar" class="sidebar" aria-label="Algorithms">
+        <div class="sidebar-heading"><h2>SORTING ALGORITHMS</h2></div>
+        <div class="algorithm-list" role="group" aria-label="Sorting algorithm selector">
+          <button class="algorithm-item active" type="button" data-algorithm="bubble" aria-pressed="true">
+            <span class="algorithm-icon icon-blue" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h15l-4-4m4 4-4 4M20 17H5l4 4m-4-4 4-4"/></svg></span>
+            <span class="algorithm-item-copy"><strong>Bubble Sort</strong><small>Compare &amp; swap</small></span>
+          </button>
+          <button class="algorithm-item" type="button" data-algorithm="selection" aria-pressed="false">
+            <span class="algorithm-icon icon-purple" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3 2.4 4.8 5.3.8-3.9 3.8.9 5.4-4.7-2.5-4.7 2.5.9-5.4-3.9-3.8 5.3-.8L12 3Z"/><path d="M5 21h14"/></svg></span>
+            <span class="algorithm-item-copy"><strong>Selection Sort</strong><small>Find the minimum</small></span>
+          </button>
+          <button class="algorithm-item" type="button" data-algorithm="insertion" aria-pressed="false">
+            <span class="algorithm-icon icon-green" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 18 18 6M8 6h10v10"/><path d="M5 5v4m0 6v4"/></svg></span>
+            <span class="algorithm-item-copy"><strong>Insertion Sort</strong><small>Shift &amp; insert</small></span>
+          </button>
+          <button class="algorithm-item" type="button" data-algorithm="merge" aria-pressed="false">
+            <span class="algorithm-icon icon-orange" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4v5c0 2 3 3 7 3m7 8v-5c0-2-3-3-7-3m0 0-4-4m4 4-4 4m4-4 4-4m-4 4 4 4"/></svg></span>
+            <span class="algorithm-item-copy"><strong>Merge Sort</strong><small>Divide &amp; merge</small></span>
+          </button>
+          <button class="algorithm-item" type="button" data-algorithm="quick" aria-pressed="false">
+            <span class="algorithm-icon icon-coral" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h16M4 12h10m-10 7h16M17 9l3 3-3 3"/></svg></span>
+            <span class="algorithm-item-copy"><strong>Quick Sort</strong><small>Partition around pivot</small></span>
+          </button>
+        </div>
+        <div class="sidebar-heading search-sidebar-heading"><h2>SEARCHING ALGORITHMS</h2></div>
+        <div class="algorithm-list" role="group" aria-label="Searching algorithm selector">
+          <button class="algorithm-item" type="button" data-algorithm="linear" aria-pressed="false">
+            <span class="algorithm-icon icon-teal" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5M8 10.5h5M10.5 8v5"/></svg></span>
+            <span class="algorithm-item-copy"><strong>Linear Search</strong><small>Check each value</small></span>
+          </button>
+          <button class="algorithm-item" type="button" data-algorithm="binary" aria-pressed="false">
+            <span class="algorithm-icon icon-blue" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h16M4 12h7m-7 7h16M13 9l3 3-3 3"/><circle cx="17" cy="12" r="2"/></svg></span>
+            <span class="algorithm-item-copy"><strong>Binary Search</strong><small>Halve a sorted range</small></span>
+          </button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <section id="visualizer" class="visualizer-page" aria-labelledby="hero-title">
+          <div class="algorithm-hero">
+            <div class="hero-copy">
+              <div id="algorithm-hero-icon" class="hero-icon icon-bubble" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M4 10h22l-6-6m6 6-6 6M28 22H6l6 6m-6-6 6-6"/></svg></div>
+              <div><h1 id="hero-title">Bubble Sort</h1><p id="hero-description">Repeatedly compare adjacent elements and swap them if they are in the wrong order.</p></div>
+            </div>
+            <div class="hero-complexities">
+              <div class="complexity-card" title="Average and worst-case time; best-case is O(n) with early termination.">
+                <span class="complexity-icon complexity-bars" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19V12h4v7M10 19V7h4v12M16 19V3h4v16"/></svg></span>
+                <span><small>Time complexity</small><strong id="hero-time">O(n²)</strong><em id="hero-time-note">Average / worst</em></span>
+              </div>
+              <div class="complexity-card" title="Auxiliary memory used by this in-place algorithm.">
+                <span class="complexity-icon complexity-space" aria-hidden="true"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5m-16 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></span>
+                <span><small>Space complexity</small><strong id="hero-space">O(1)</strong><em>Auxiliary space</em></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="visualizer-workspace">
+            <section class="array-card" aria-labelledby="array-heading">
+              <div class="array-card-heading">
+                <div class="array-title"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4 4 7l3 3m10 10 3-3-3-3M4 12h16m-1-8-3 3 3 3M7 20l3-3-3-3"/></svg><h2 id="array-heading">Array</h2><span id="array-size-label">(8 elements)</span></div>
+                <div id="legend" class="legend" aria-label="Visualization colors">
+                  <span><i class="legend-dot dot-normal"></i>Normal</span><span><i class="legend-dot dot-compare"></i>Comparing</span><span><i class="legend-dot dot-swap"></i>Swapping</span><span><i class="legend-dot dot-sorted"></i>Sorted</span>
+                </div>
+                <label class="array-size-control" for="size-range"><span>Array size</span><input id="size-range" type="range" min="1" max="24" step="1" value="8" aria-label="Number of array elements"><strong id="size-value">8</strong></label>
+              </div>
+              <div class="search-target-controls" id="search-target-controls" hidden>
+                <label for="search-target">Target</label>
+                <input id="search-target" type="number" step="1" value="23" aria-label="Integer value to search for">
+                <button id="sort-for-binary" class="sort-for-binary" type="button" hidden>Sort array first</button>
+                <span id="binary-sort-note" class="binary-sort-note" hidden>Sorting changes array order.</span>
+              </div>
+              <div class="chart-scroll" tabindex="0" aria-label="Scrollable algorithm array visualization">
+                <svg id="sort-chart" class="sort-chart" viewBox="0 0 900 340" preserveAspectRatio="xMidYMin meet" role="img" aria-label="Array values visualized as bars">
+                  <g id="chart-grid" aria-hidden="true"></g>
+                  <line id="chart-baseline" x1="28" x2="890" y1="296" y2="296" aria-hidden="true"></line>
+                  <g id="chart-bars"></g>
+                  <g id="chart-indices" aria-hidden="true"></g>
+                </svg>
+              </div>
+            </section>
+
+            <aside class="step-card" aria-labelledby="step-card-heading">
+              <div class="step-card-heading">
+                <h2 id="step-card-heading">Step Information</h2>
+                <div class="step-badges" aria-label="Playback status and current operation">
+                  <span id="playback-status" class="playback-status">Ready</span>
+                  <span id="operation-kind" class="operation-badge badge-ready">—</span>
+                </div>
+              </div>
+              <h3 id="inspector-heading">Ready to begin</h3>
+              <p id="event-explanation" class="step-explanation" aria-live="polite">Play the trace or step forward to see which elements this algorithm examines.</p>
+              <div id="operation-details" class="operation-details" role="group" aria-label="Relevant indices and values"><span class="operation-detail-hint">Index and value details appear here.</span></div>
+              <div class="step-code"><div class="step-code-caption"><span>Current operation</span><span id="step-code-line">—</span></div><pre><code id="step-code-snippet">Compare adjacent elements, then swap if out of order.</code></pre></div>
+              <div class="current-array-heading"><strong>Current array</strong><span id="event-number">Ready</span></div>
+              <div id="current-array" class="current-array" role="list" tabindex="0" aria-label="Current array values; scroll horizontally to inspect every element"></div>
+              <div class="timeline-heading"><span>Recent events</span><span>Oldest first</span></div>
+              <ol id="event-timeline" class="event-timeline" aria-label="Recent algorithm events in chronological order"></ol>
+            </aside>
+          </div>
+
+          <div class="playback-toolbar" role="group" aria-label="Algorithm playback controls">
+            <button id="randomize-button" class="control-button randomize-button" type="button" aria-label="Generate a new random array"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 3h5v5m0-5-6 6M4 7h3c4 0 6 10 10 10h4m-5-3 5 3-5 3M4 17h3c1.4 0 2.5-1.2 3.6-2.7"/></svg><span>Randomize</span></button>
+            <button id="reset-button" class="control-button reset-button" type="button" aria-label="Reset to the original array"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0 1 4m-1-10v6h-6"/></svg><span>Reset</span></button>
+            <span class="toolbar-divider" aria-hidden="true"></span>
+            <div class="step-controls">
+              <button id="previous-button" class="control-button step-button" type="button" aria-label="Previous step" title="Previous step (←)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5v14m13-13-7 6 7 6"/></svg></button>
+              <button id="play-button" class="control-button play-button" type="button" aria-label="Play animation" title="Play or pause (Space)"><svg id="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 12 7-12 7V5Z"/></svg><span id="play-label">Play</span></button>
+              <button id="next-button" class="control-button step-button" type="button" aria-label="Next step" title="Next step (→)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 5v14M5 6l7 6-7 6"/></svg></button>
+            </div>
+            <div class="speed-control">
+              <label for="speed-range">Speed: <strong id="speed-label">800ms</strong></label>
+              <input id="speed-range" type="range" min="250" max="1400" step="50" value="850" aria-label="Animation delay in milliseconds; moving right is faster">
+              <div class="speed-ends"><span>Slower</span><span>Faster</span></div>
+            </div>
+          </div>
+
+          <section class="stats-grid" aria-label="Live performance statistics">
+            <article class="stat-card comparisons-stat"><span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20v-7h4v7M10 20V8h4v12M16 20V3h4v17"/></svg></span><div><span class="stat-label">Comparisons</span><strong id="comparison-count">0</strong></div></article>
+            <article class="stat-card swaps-stat"><span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h15l-4-4m4 4-4 4M20 17H5l4 4m-4-4 4-4"/></svg></span><div><span class="stat-label">Swaps</span><strong id="swap-count">0</strong></div></article>
+            <article class="stat-card shifts-stat"><span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span><div><span class="stat-label">Shifts</span><strong id="shift-count">0</strong></div></article>
+            <article class="stat-card writes-stat" hidden><span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5zM8 8h8m-8 4h8m-8 4h5"/></svg></span><div><span class="stat-label">Array writes</span><strong id="write-count">0</strong></div></article>
+            <article class="stat-card progress-stat"><span id="progress-ring-fill" class="progress-ring" aria-hidden="true"></span><div class="progress-copy"><span class="stat-label">Progress</span><strong><span id="progress-current">0</span> / <span id="progress-total">0</span></strong><div class="progress-track" role="progressbar" aria-label="Execution progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progress-fill"></span></div></div><span id="progress-label" class="progress-percent">0%</span></article>
+          </section>
+
+          <section class="learning-grid" aria-label="Algorithm learning materials">
+            <article class="learning-card explanation-card">
+              <div class="learning-heading"><span class="learning-icon book-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21V5.5ZM4 6h13M8 3v3"/></svg></span><h2>Algorithm Explanation</h2></div>
+              <ol id="learning-steps" class="learning-steps"></ol>
+              <div class="complexity-details"><div class="complexity-details-heading"><strong>Complexity at a glance</strong><span id="complexity-space-detail">Space O(1)</span></div><div id="complexity-summary" class="complexity-summary"></div><p id="complexity-note" class="complexity-note"></p></div>
+            </article>
+            <article class="learning-card pseudocode-card">
+              <div class="learning-heading"><span class="learning-icon code-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-1-13-4 16"/></svg></span><h2>Pseudocode</h2><span class="language-tag">PSEUDOCODE</span></div>
+              <p class="pseudo-intro">The highlighted line follows the current operation.</p>
+              <ol id="pseudocode-list" class="pseudocode-list" aria-label="Algorithm pseudocode"></ol>
+            </article>
+          </section>
+        </section>
+      </main>
+    </div>
+    <div id="live-announcer" class="sr-only" aria-live="polite"></div>
+  </body>
+</html>
