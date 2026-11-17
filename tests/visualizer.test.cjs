@@ -3,7 +3,7 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 
 async function loadAlgorithms() {
-  const source = await fs.readFile(path.join(__dirname, '..', 'public', 'algorithms.js'), 'utf8');
+  const source = await fs.readFile(path.join(__dirname, '..', 'public', 'visual-engine.js'), 'utf8');
   const moduleUrl = `data:text/javascript;base64,${Buffer.from(source).toString('base64')}`;
   return import(moduleUrl);
 }

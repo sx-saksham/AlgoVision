@@ -1,4 +1,4 @@
-import { generateTrace, getAlgorithm } from './algorithms.js';
+import { generateTrace, getAlgorithm } from './visual-engine.js';
 
 const INITIAL_ARRAY = [64, 23, 87, 45, 12, 78, 34, 56];
 const SVG_NS = 'http://www.w3.org/2000/svg';

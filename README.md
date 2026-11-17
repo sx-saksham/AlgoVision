@@ -20,9 +20,7 @@ All seven algorithms use the same event snapshots and single guarded playback ti
 algovision/
 ├── package.json              # Dependency-free start and test scripts
 ├── server.js                 # Node built-in static-file server
-├── README.md                 # Usage, architecture, validation, limitations
-├── TODO.md                   # Detailed requested outcomes and status
-├── app.config.ts             # Project identity/logo metadata
+├── README.md                 # Usage, architecture, validation
 ├── cpp/                      # FODSA Standard C++ Algorithm Suite & CLI Visualizer
 │   ├── algorithms.hpp        # Core declarations and metrics structures
 │   ├── visualizer.hpp        # Terminal ASCII bar visualizer & step engine
@@ -39,14 +37,13 @@ algovision/
 │   ├── build_and_run.bat     # Windows one-click build script
 │   └── README.md             # C++ curriculum & viva reference guide
 ├── tests/
-│   └── algorithms.test.cjs   # Node built-in sort/search trace tests
+│   └── visualizer.test.cjs   # Visual trace regression tests
 └── public/
     ├── index.html            # Accessible shell, visualizer & C++ code panel
     ├── styles.css            # Light UI, responsive layout, syntax highlight
     ├── app.js                # Dual C++/Pseudocode viewer, synchronized trace
-    ├── algorithms.js         # Seven C++ & JavaScript trace models
-    ├── algovision-mark.svg   # Site mark and favicon
-    └── manus-routes.json     # Single-page route declaration
+    ├── visual-engine.js      # Browser SVG animation & trace state generator
+    └── algovision-mark.svg   # Site mark and favicon
 ```
 
 ## Running the C++ Suite (FODSA CLI Visualizer)
