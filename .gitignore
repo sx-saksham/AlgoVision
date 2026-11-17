@@ -4,3 +4,8 @@ node_modules/
 !.env.example
 .DS_Store
 Thumbs.db
+
+# Documentation and presentation artifacts
+*.docx
+*.pdf
+*.pptx
