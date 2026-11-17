@@ -305,13 +305,24 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid 
 .complexity-cell strong { color: var(--text-strong); font: 600 var(--fs-meta)/1.2 var(--font-mono); }
 .complexity-note { margin: 4px 0 0; color: var(--muted); font-size: var(--fs-meta); line-height: 1.32; }
 .pseudo-intro { margin: 5px 0 6px; color: var(--muted); font-size: var(--fs-meta); }
+.code-card-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.code-lang-selector { display: inline-flex; align-items: center; background: var(--bg-surface-alt, #f0f3f8); border: 1px solid var(--border); border-radius: 6px; padding: 2px; gap: 2px; }
+.code-lang-btn { background: transparent; border: none; border-radius: 4px; padding: 3px 8px; font-size: 11px; font-weight: 600; color: var(--muted); cursor: pointer; transition: all 0.15s ease; }
+.code-lang-btn:hover { color: var(--text-strong); }
+.code-lang-btn.active { background: #fff; color: var(--primary); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
 .pseudocode-list { display: grid; gap: 0; max-height: 238px; overflow-y: auto; margin: 0; padding: 1px 0; list-style: none; }
 .pseudocode-list li { min-width: 0; display: grid; grid-template-columns: 24px minmax(0, 1fr); align-items: baseline; gap: 6px; padding: 1px 6px 1px 1px; border-left: 2px solid transparent; border-radius: 4px; color: var(--muted); font: var(--fs-code)/1.3 var(--font-mono); }
 .pseudocode-list li.pseudo-active { border-left-color: var(--primary); background: var(--primary-pale); color: var(--text-strong); }
 .line-number { color: var(--muted-soft); text-align: right; }
 .pseudocode-list code { overflow-wrap: anywhere; font: inherit; }
 .code-keyword { color: #a84567; font-weight: 600; }
+.code-type { color: #006699; font-weight: 600; }
+.code-function { color: #884400; }
+.code-comment { color: #6a737d; font-style: italic; }
+.code-number { color: #005cc5; }
 .pseudo-active .code-keyword { color: var(--primary); }
+.pseudo-active .code-type { color: #005588; }
+.pseudo-active .code-comment { color: #495057; }
 
 @media (max-width: 1250px) {
   .app-shell { grid-template-columns: 220px minmax(0,1fr); }

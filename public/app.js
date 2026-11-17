@@ -43,6 +43,7 @@ const state = {
   searchTarget: 23,
   chartNodes: new Map(),
   errorMessage: '',
+  codeLanguage: 'cpp',
 };
 
 const elements = {
@@ -100,6 +101,10 @@ const elements = {
   complexitySpace: document.getElementById('complexity-space-detail'),
   complexityNote: document.getElementById('complexity-note'),
   pseudocode: document.getElementById('pseudocode-list'),
+  langBtnCpp: document.getElementById('lang-btn-cpp'),
+  langBtnPseudo: document.getElementById('lang-btn-pseudo'),
+  languageBadge: document.getElementById('language-badge'),
+  codeIntro: document.getElementById('code-intro'),
   sidebar: document.getElementById('algorithm-sidebar'),
   sidebarToggle: document.getElementById('sidebar-toggle'),
   sidebarScrim: document.getElementById('sidebar-scrim'),
@@ -484,7 +489,9 @@ function renderInspector(event) {
     elements.inspectorTitle.textContent = state.errorMessage ? 'Unable to build this trace' : 'Ready to begin';
     elements.explanation.textContent = state.errorMessage || 'Play the trace or step forward to see which elements this algorithm examines.';
     elements.codeLine.textContent = '—';
-    elements.codeSnippet.textContent = 'Choose an algorithm operation to see its matching pseudocode.';
+    elements.codeSnippet.textContent = state.codeLanguage === 'cpp'
+      ? 'Choose an algorithm operation to see its matching C++ line.'
+      : 'Choose an algorithm operation to see its matching pseudocode.';
     const hint = document.createElement('span');
     hint.className = 'operation-detail-hint';
     hint.textContent = 'Index and value details appear here.';
@@ -501,7 +508,11 @@ function renderInspector(event) {
   elements.explanation.textContent = event.explanation;
   renderOperationDetails(event);
   elements.codeLine.textContent = event.codeLine >= 0 ? `LINE ${String(event.codeLine + 1).padStart(2, '0')}` : '';
-  elements.codeSnippet.textContent = getAlgorithm(state.algorithmId).pseudocode[event.codeLine] || event.explanation;
+  const currentAlgorithm = getAlgorithm(state.algorithmId);
+  const activeCodeLines = (state.codeLanguage === 'cpp' && currentAlgorithm.cppCode)
+    ? currentAlgorithm.cppCode
+    : currentAlgorithm.pseudocode;
+  elements.codeSnippet.textContent = activeCodeLines[event.codeLine] || event.explanation;
   elements.currentArray.replaceChildren(...event.array.map((value, index) => arrayChip(value, index, event)));
   renderTimeline();
 }
@@ -580,17 +591,93 @@ function renderLearning(event) {
 
   elements.pseudocode.replaceChildren();
   const activeLine = event?.codeLine ?? -1;
-  algorithm.pseudocode.forEach((line, index) => {
+  const isCpp = state.codeLanguage === 'cpp';
+  const codeLines = (isCpp && algorithm.cppCode) ? algorithm.cppCode : algorithm.pseudocode;
+
+  codeLines.forEach((line, index) => {
     const item = document.createElement('li');
     if (index === activeLine) item.classList.add('pseudo-active');
     const number = document.createElement('span');
     number.className = 'line-number';
     number.textContent = String(index + 1);
     const code = document.createElement('code');
-    code.append(...highlightPseudo(line));
+    if (isCpp) {
+      code.append(...highlightCpp(line));
+    } else {
+      code.append(...highlightPseudo(line));
+    }
     item.append(number, code);
     elements.pseudocode.append(item);
   });
+}
+
+function highlightCpp(text) {
+  const commentIndex = text.indexOf('//');
+  if (commentIndex !== -1) {
+    const codePart = text.slice(0, commentIndex);
+    const commentPart = text.slice(commentIndex);
+    const nodes = highlightCppCodeOnly(codePart);
+    const commentSpan = document.createElement('span');
+    commentSpan.className = 'code-comment';
+    commentSpan.textContent = commentPart;
+    nodes.push(commentSpan);
+    return nodes;
+  }
+  return highlightCppCodeOnly(text);
+}
+
+function highlightCppCodeOnly(text) {
+  const tokenRegex = /(\b(?:void|int|bool|vector<int>&|vector<int>|for|while|if|else|return|break|const|std::swap|swap|push_back|size|true|false)\b|\b\d+\b)/g;
+  return text.split(tokenRegex).map((fragment) => {
+    if (!fragment) return document.createTextNode('');
+    if (/^(void|int|bool|vector<int>&|vector<int>)$/.test(fragment)) {
+      const typeSpan = document.createElement('span');
+      typeSpan.className = 'code-type';
+      typeSpan.textContent = fragment;
+      return typeSpan;
+    }
+    if (/^(for|while|if|else|return|break|const|true|false)$/.test(fragment)) {
+      const kw = document.createElement('span');
+      kw.className = 'code-keyword';
+      kw.textContent = fragment;
+      return kw;
+    }
+    if (/^(std::swap|swap|push_back|size)$/.test(fragment)) {
+      const fn = document.createElement('span');
+      fn.className = 'code-function';
+      fn.textContent = fragment;
+      return fn;
+    }
+    if (/^\d+$/.test(fragment)) {
+      const num = document.createElement('span');
+      num.className = 'code-number';
+      num.textContent = fragment;
+      return num;
+    }
+    return document.createTextNode(fragment);
+  });
+}
+
+function setCodeLanguage(lang) {
+  state.codeLanguage = lang;
+  if (elements.langBtnCpp && elements.langBtnPseudo) {
+    elements.langBtnCpp.classList.toggle('active', lang === 'cpp');
+    elements.langBtnCpp.setAttribute('aria-selected', String(lang === 'cpp'));
+    elements.langBtnPseudo.classList.toggle('active', lang === 'pseudo');
+    elements.langBtnPseudo.setAttribute('aria-selected', String(lang === 'pseudo'));
+  }
+  if (elements.languageBadge) {
+    elements.languageBadge.textContent = lang === 'cpp' ? 'C++17' : 'PSEUDOCODE';
+  }
+  if (elements.codeIntro) {
+    elements.codeIntro.textContent = lang === 'cpp'
+      ? 'Standard C++ implementation (FODSA curriculum). The highlighted line follows the current operation.'
+      : 'Algorithmic pseudocode. The highlighted line follows the current operation.';
+  }
+  renderPseudocode(currentEvent());
+  if (currentEvent()) {
+    renderInspector(currentEvent());
+  }
 }
 
 function highlightPseudo(text) {
@@ -675,6 +762,12 @@ function closeSidebar() {
 
 function bindEvents() {
   elements.algorithms.forEach((button) => button.addEventListener('click', () => chooseAlgorithm(button.dataset.algorithm)));
+  if (elements.langBtnCpp) {
+    elements.langBtnCpp.addEventListener('click', () => setCodeLanguage('cpp'));
+  }
+  if (elements.langBtnPseudo) {
+    elements.langBtnPseudo.addEventListener('click', () => setCodeLanguage('pseudo'));
+  }
   elements.randomize.addEventListener('click', () => setInputArray(randomArray(state.originalArray.length)));
   elements.previous.addEventListener('click', stepBackward);
   elements.next.addEventListener('click', stepForward);

@@ -23,20 +23,53 @@ algovision/
 ├── README.md                 # Usage, architecture, validation, limitations
 ├── TODO.md                   # Detailed requested outcomes and status
 ├── app.config.ts             # Project identity/logo metadata
+├── cpp/                      # FODSA Standard C++ Algorithm Suite & CLI Visualizer
+│   ├── algorithms.hpp        # Core declarations and metrics structures
+│   ├── visualizer.hpp        # Terminal ASCII bar visualizer & step engine
+│   ├── main.cpp              # Compilable CLI menu & test runner
+│   ├── bubble_sort.cpp       # Bubble Sort C++ implementation
+│   ├── selection_sort.cpp    # Selection Sort C++ implementation
+│   ├── insertion_sort.cpp    # Insertion Sort C++ implementation
+│   ├── merge_sort.cpp        # Merge Sort C++ implementation
+│   ├── quick_sort.cpp        # Quick Sort C++ implementation
+│   ├── linear_search.cpp     # Linear Search C++ implementation
+│   ├── binary_search.cpp     # Binary Search C++ implementation
+│   ├── Makefile              # GCC build script
+│   ├── CMakeLists.txt        # CMake build configuration
+│   ├── build_and_run.bat     # Windows one-click build script
+│   └── README.md             # C++ curriculum & viva reference guide
 ├── tests/
 │   └── algorithms.test.cjs   # Node built-in sort/search trace tests
 └── public/
-    ├── index.html            # Accessible shell, grouped algorithm selector, visualizer
-    ├── styles.css            # Existing light UI, responsive layout, trace-state colors
-    ├── app.js                # Shared chart, inspector, controls, counters, learning UI
-    ├── algorithms.js         # Seven pure JavaScript trace generators and metadata
+    ├── index.html            # Accessible shell, visualizer & C++ code panel
+    ├── styles.css            # Light UI, responsive layout, syntax highlight
+    ├── app.js                # Dual C++/Pseudocode viewer, synchronized trace
+    ├── algorithms.js         # Seven C++ & JavaScript trace models
     ├── algovision-mark.svg   # Site mark and favicon
     └── manus-routes.json     # Single-page route declaration
 ```
 
-## Run locally
+## Running the C++ Suite (FODSA CLI Visualizer)
 
-Requires Node.js and a browser. There are no npm dependencies to install and no C++ compiler is used by this project path.
+For compiling and running the terminal C++ visualizer:
+
+- **Using GCC / MinGW**:
+  ```bash
+  cd cpp
+  g++ -std=c++17 -O2 main.cpp bubble_sort.cpp selection_sort.cpp insertion_sort.cpp merge_sort.cpp quick_sort.cpp linear_search.cpp binary_search.cpp -o algovision_cli
+  ./algovision_cli
+  ```
+- **Using Makefile**:
+  ```bash
+  cd cpp
+  make run
+  ```
+- **On Windows**:
+  Run `cpp\build_and_run.bat`.
+
+## Running the Web Visualizer Locally
+
+Requires Node.js and a modern browser. The web visualizer natively features a synchronized **C++ (FODSA) Code Viewer** that tracks algorithm execution line-by-line during visual playback.
 
 For a private laptop-local run, bind the server to loopback:
 
@@ -56,8 +89,10 @@ Open `http://localhost:3000`. Run `npm test` to execute the algorithm regression
 - Desktop (1536×1000), tablet (768×1024), and mobile (390×844) screenshots were reviewed. Browser console inspection after interaction tests showed no application runtime errors. The static route manifest, all requested static assets, unique DOM IDs, and JavaScript ID references also passed checks.
 - JavaScript syntax checks pass for the app controller, algorithm module, Node static server, and test runner. No algorithm API/JSON endpoint is claimed or tested because this selected browser-local path adds none.
 
-## Architecture/API limitation
+## Dual-Layer Architecture (C++ Core + Web Visualizer)
 
-The supplied follow-up brief described existing C++ implementations, a Node API pattern and JSON endpoints. They are not present in the checked-out AlgoVision project: the repository contains browser-local JavaScript algorithms and a Node static-file server only. As selected by the user, this extension follows the project that actually exists and implements all four new generators in `public/algorithms.js`; it does **not** add C++ sources, compile programs, algorithm API routes, or JSON API endpoints. The only server endpoints remain the existing static-file GET/HEAD responses. If C++/API integration is later required, the original backend source/build and API contract must be supplied or separately authorized for creation.
+This project bridges theoretical C++ coursework with modern interactive visualization:
+- **C++ Core (`/cpp`)**: Provides production-standard, compilable C++17 implementations of all 7 algorithms (`bubble_sort.cpp`, `selection_sort.cpp`, `insertion_sort.cpp`, `merge_sort.cpp`, `quick_sort.cpp`, `linear_search.cpp`, `binary_search.cpp`), complete with an interactive terminal CLI visualizer and regression test runner.
+- **Web Visualizer (`/public`)**: Provides an interactive, zero-dependency browser UI that animates algorithmic state transitions and tracks active execution line-by-line across both C++ (FODSA curriculum) and Pseudocode views.
 
 No authentication, database, leaderboard, AI service, external dependency, or additional page was added.
